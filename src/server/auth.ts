@@ -4,6 +4,7 @@ import {
   type DefaultSession,
   type NextAuthOptions,
 } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
 import { type Adapter } from "next-auth/adapters";
 
 import { env } from "~/env";
@@ -36,17 +37,39 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
-  callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
+  // callbacks: {
+  //   session: ({ session, user }) => ({
+  //     ...session,
+  //     user: {
+  //       ...session.user,
+  //       id: user.id,
+  //     },
+  //   }),
+  // },
+  adapter: PrismaAdapter(db) as Adapter,
+  providers: [
+    CredentialsProvider({
+      // The name to display on the sign in form (e.g. "Sign in with...")
+      name: "Credentials",
+      credentials: {
+        username: {
+          label: "Username",
+          type: "text",
+          placeholder: "Enter your name...",
+        },
+      },
+      async authorize(credentials, req) {
+        // Add logic here to look up the user from the credentials supplied
+        const user = { id: "1", name: credentials?.username };
+
+        return user;
       },
     }),
+  ],
+  secret: env.NEXTAUTH_SECRET,
+  session: {
+    strategy: "jwt",
   },
-  adapter: PrismaAdapter(db) as Adapter,
-  providers: [],
 };
 
 /**

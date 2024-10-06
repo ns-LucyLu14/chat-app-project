@@ -12,9 +12,9 @@ interface LayoutProps {
 }
 
 const Layout: FC<LayoutProps> = async ({ children }) => {
-  //   const session = await getServerAuthSession();
+  const session = await getServerAuthSession();
 
-  //   if (!session) notFound();
+  if (!session) notFound();
   return (
     <div className="flex h-screen w-full">
       <div className="flex h-full w-full max-w-xs grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
@@ -68,7 +68,7 @@ const Layout: FC<LayoutProps> = async ({ children }) => {
               </div>
 
               <Link
-                href={"/"}
+                href={"/api/auth/signout"}
                 className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white text-[0.625rem] font-medium text-gray-400 hover:border-indigo-600 hover:text-indigo-600"
               >
                 <TbLogout className="h-5 w-5" />
