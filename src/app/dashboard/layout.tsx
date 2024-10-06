@@ -28,11 +28,25 @@ const Layout: FC<LayoutProps> = async ({ children }) => {
           </div>
 
           <nav className="flex flex-1 flex-col">
-            <ul role="list" className="flex flex-1 flex-col gap-y-7">
-              <li>Friend 1</li>
-              <li>Friend 2</li>
+            <ul role="list" className="mb-2 flex flex-1 flex-col gap-y-3">
               <li>
-                <div className="text-xs font-semibold leading-6 text-gray-400">
+                <Link
+                  href={"/dashboard/chat/asd"}
+                  className="font-semibold text-gray-600 hover:cursor-pointer hover:border-indigo-600 hover:text-indigo-600"
+                >
+                  Friend 1
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href={"/dashboard/chat/asd"}
+                  className="font-semibold text-gray-600 hover:cursor-pointer hover:border-indigo-600 hover:text-indigo-600"
+                >
+                  Friend 2
+                </Link>
+              </li>
+              <li>
+                <div className="mt-4 text-xs font-semibold leading-6 text-gray-400">
                   Overview
                 </div>
 
