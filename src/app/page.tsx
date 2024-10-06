@@ -10,6 +10,8 @@ export default async function Home() {
 
   void api.post.getLatest.prefetch();
 
+  console.log("session", session?.user);
+
   return (
     <HydrateClient>
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
@@ -33,6 +35,12 @@ export default async function Home() {
                 className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
               >
                 {session ? "Sign out" : "Sign in"}
+              </Link>
+              <Link
+                href={"/dashboard"}
+                className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
+              >
+                Go to Dashboard
               </Link>
             </div>
           </div>
