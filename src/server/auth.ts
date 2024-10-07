@@ -9,6 +9,7 @@ import { type Adapter } from "next-auth/adapters";
 
 import { env } from "~/env";
 import { db } from "~/server/db";
+import { api } from "~/trpc/server";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -20,6 +21,8 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
+      name: string;
+      username: string;
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
@@ -37,15 +40,6 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
-  // callbacks: {
-  //   session: ({ session, user }) => ({
-  //     ...session,
-  //     user: {
-  //       ...session.user,
-  //       id: user.id,
-  //     },
-  //   }),
-  // },
   adapter: PrismaAdapter(db) as Adapter,
   providers: [
     CredentialsProvider({
@@ -64,7 +58,7 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials, req) {
         // Destructure the credentials
-        const { name, username } = credentials || {};
+        const { name, username } = credentials ?? {};
 
         // Check for existing user in the database
         const existingUser = await db.user.findUnique({
@@ -76,14 +70,10 @@ export const authOptions: NextAuthOptions = {
           return existingUser;
         } else {
           // User does not exist, create a new user
-          const newUser = await db.user.create({
-            data: {
-              name: name,
-              username: username,
-              email: null,
-              theme: "light",
-            },
-          });
+          let newUser;
+          if (name && username) {
+            newUser = await api.user.create({ name, username });
+          }
 
           return newUser;
         }
@@ -93,6 +83,25 @@ export const authOptions: NextAuthOptions = {
   secret: env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
+  },
+  callbacks: {
+    async session({ session, token, user }) {
+      // Include user.id, user.username, and user.name in the session
+      if (session?.user) {
+        session.user.id = token.sub; // User ID is in the token's subject
+        session.user.username = token.username as string; // Pass username from token
+        session.user.name = token.name as string; // Pass name from token
+      }
+      return session;
+    },
+    async jwt({ token, user }) {
+      // When a user is first logged in, include `username` and `name` in the JWT
+      if (user) {
+        token.username = user.username;
+        token.name = user.name;
+      }
+      return token;
+    },
   },
 };
 
