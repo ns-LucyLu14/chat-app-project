@@ -12,16 +12,15 @@ const Messages = (props: MessageProps) => {
       className="scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch flex h-full flex-1 flex-col-reverse gap-4 overflow-y-auto p-3"
     >
       <div ref={scrollDownRef} />
-      <div className="chat-message">
-        <div>
-          <div className="mx-2 flex max-w-xs flex-col space-y-2 text-base">
-            <span className="inline-block rounded-lg bg-indigo-600 px-4 py-2 text-white">
-              Messageeeeee ad sad sadka'skd'aksd'askd'aksd'akkk'k'as'lkd'ka 1{" "}
-              <span className="ml-2 justify-self-end text-xs text-white">
-                22:00
-              </span>
-            </span>
+      {}
+      <div className="flex max-w-sm flex-wrap rounded-md bg-indigo-200 p-4">
+        <div className="text-sm underline">Domagoj</div>
+
+        <div className="flex flex-grow flex-col justify-between">
+          <div className="pt-2 text-sm">
+            message text lets make it big so hopefully it goes to another line
           </div>
+          <span className="ml-auto text-xs text-gray-600">time</span>{" "}
         </div>
       </div>
     </div>
