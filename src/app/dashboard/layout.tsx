@@ -15,6 +15,77 @@ interface LayoutProps {
 const Layout: FC<LayoutProps> = async ({ children }) => {
   const session = await getServerAuthSession();
 
+  const chats = [
+    {
+      userId: "user_1",
+      conversationId: "conv_1",
+      name: "Alice Johnson",
+      username: "alicej",
+      conversation: {
+        id: "conv_1",
+        lastMessageId: "msg_2",
+        createdAt: "2024-10-07T10:00:00Z",
+        messages: [
+          {
+            id: "msg_1",
+            messageText: "Hey Bob, how’s it going?",
+            userId: "user_1",
+            conversationId: "conv_1",
+            createdAt: "2024-10-07T10:01:00Z",
+          },
+          {
+            id: "msg_2",
+            messageText: "Doing well, Alice! How about you?",
+            userId: "user_2",
+            conversationId: "conv_1",
+            createdAt: "2024-10-07T10:02:00Z",
+          },
+        ],
+        lastMessage: {
+          id: "msg_2",
+          messageText: "Doing well, Alice! How about you?",
+          userId: "user_2",
+          conversationId: "conv_1",
+          createdAt: "2024-10-07T10:02:00Z",
+        },
+      },
+    },
+    {
+      userId: "user_1",
+      conversationId: "conv_2",
+      name: "Charlie Brown",
+      username: "charlieb",
+      conversation: {
+        id: "conv_2",
+        lastMessageId: "msg_4",
+        createdAt: "2024-10-07T11:00:00Z",
+        messages: [
+          {
+            id: "msg_3",
+            messageText: "Charlie, did you finish the report?",
+            userId: "user_1",
+            conversationId: "conv_2",
+            createdAt: "2024-10-07T11:01:00Z",
+          },
+          {
+            id: "msg_4",
+            messageText: "Yeah, I sent it earlier today.",
+            userId: "user_3",
+            conversationId: "conv_2",
+            createdAt: "2024-10-07T11:02:00Z",
+          },
+        ],
+        lastMessage: {
+          id: "msg_4",
+          messageText: "Yeah, I sent it earlier today.",
+          userId: "user_3",
+          conversationId: "conv_2",
+          createdAt: "2024-10-07T11:02:00Z",
+        },
+      },
+    },
+  ];
+
   if (!session) notFound();
   return (
     <HydrateClient>
@@ -29,22 +100,18 @@ const Layout: FC<LayoutProps> = async ({ children }) => {
 
           <nav className="flex flex-1 flex-col">
             <ul role="list" className="mb-2 flex flex-1 flex-col gap-y-3">
-              <li>
-                <Link
-                  href={"/dashboard/chat/asd"}
-                  className="font-semibold text-gray-600 hover:cursor-pointer hover:border-indigo-600 hover:text-indigo-600"
-                >
-                  Friend 1
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href={"/dashboard/chat/asd"}
-                  className="font-semibold text-gray-600 hover:cursor-pointer hover:border-indigo-600 hover:text-indigo-600"
-                >
-                  Friend 2
-                </Link>
-              </li>
+              {chats.map((chat, index) => {
+                return (
+                  <li key={index}>
+                    <Link
+                      href={`/dashboard/chat/${chat.conversationId}`}
+                      className="font-semibold text-gray-600 hover:cursor-pointer hover:border-indigo-600 hover:text-indigo-600"
+                    >
+                      {chat.name}
+                    </Link>
+                  </li>
+                );
+              })}
               <li>
                 <div className="mt-4 text-xs font-semibold leading-6 text-gray-400">
                   Overview

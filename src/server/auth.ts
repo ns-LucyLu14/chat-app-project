@@ -49,20 +49,44 @@ export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db) as Adapter,
   providers: [
     CredentialsProvider({
-      // The name to display on the sign in form (e.g. "Sign in with...")
       name: "Credentials",
       credentials: {
-        username: {
-          label: "Username",
+        name: {
+          label: "Name",
           type: "text",
           placeholder: "Enter your name...",
         },
+        username: {
+          label: "Username",
+          type: "text",
+          placeholder: "Enter your username...",
+        },
       },
       async authorize(credentials, req) {
-        // Add logic here to look up the user from the credentials supplied
-        const user = { id: "1", name: credentials?.username };
+        // Destructure the credentials
+        const { name, username } = credentials || {};
 
-        return user;
+        // Check for existing user in the database
+        const existingUser = await db.user.findUnique({
+          where: { username: username },
+        });
+
+        if (existingUser) {
+          // User exists, return the existing user
+          return existingUser;
+        } else {
+          // User does not exist, create a new user
+          const newUser = await db.user.create({
+            data: {
+              name: name,
+              username: username,
+              email: null,
+              theme: "light",
+            },
+          });
+
+          return newUser;
+        }
       },
     }),
   ],
