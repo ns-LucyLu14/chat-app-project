@@ -51,6 +51,7 @@ model User {
     accounts      Account[]
     sessions      Session[]
     username      String?   @unique
+    nickname      String?
     theme         String?
 
   messages      Message[]
