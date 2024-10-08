@@ -23,7 +23,7 @@ export default async function Home() {
           <div className="flex flex-col items-center justify-center gap-4">
             <Link
               href={"/api/auth/signin"}
-              className="rounded-full bg-secondaryBackground px-10 py-3 font-semibold text-primaryText no-underline transition hover:bg-primaryHover hover:text-secondaryText"
+              className="rounded-md bg-secondaryBackground px-5 py-3 font-semibold text-primaryText no-underline transition hover:bg-primaryHover hover:text-secondaryText"
             >
               Sign in
             </Link>
