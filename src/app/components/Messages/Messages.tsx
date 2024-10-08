@@ -13,14 +13,14 @@ const Messages = (props: MessageProps) => {
     >
       <div ref={scrollDownRef} />
       {}
-      <div className="flex max-w-sm flex-wrap rounded-md bg-indigo-200 p-4">
-        <div className="text-sm underline">Domagoj</div>
+      <div className="bg-secondaryBackground dark flex max-w-sm flex-wrap rounded-md p-4">
+        <div className="text-primaryText text-sm underline">Domagoj</div>
 
         <div className="flex flex-grow flex-col justify-between">
-          <div className="pt-2 text-sm">
+          <div className="text-testText text-secondaryText pt-2 text-sm">
             message text lets make it big so hopefully it goes to another line
           </div>
-          <span className="ml-auto text-xs text-gray-600">time</span>{" "}
+          <span className="text-tertiaryText ml-auto text-xs">time</span>{" "}
         </div>
       </div>
     </div>

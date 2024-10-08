@@ -1,12 +1,13 @@
+import { useTheme } from "next-themes";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useEffect } from "react";
 import { FiMoon } from "react-icons/fi";
 import { MdOutlineAddBox, MdOutlineConnectedTv } from "react-icons/md";
 import { RiUserAddLine } from "react-icons/ri";
 import { TbLogout } from "react-icons/tb";
 import { getServerAuthSession } from "~/server/auth";
-import { HydrateClient } from "~/trpc/server";
+import { api, HydrateClient } from "~/trpc/server";
 
 interface LayoutProps {
   children: ReactNode;
@@ -14,6 +15,34 @@ interface LayoutProps {
 
 const Layout: FC<LayoutProps> = async ({ children }) => {
   const session = await getServerAuthSession();
+
+  // const { theme, setTheme } = useTheme();
+  // const changeUserThemeMutation = api.user.changeUserTheme.useMutation();
+  // const changeTheme = () => {
+  //   changeUserThemeMutation.mutate(
+  //     {
+  //       theme: theme === "light" ? "dark" : "light",
+  //     },
+  //     {
+  //       onSettled: (data, error) => {
+  //         if (data) {
+  //           setTheme(data.theme as string);
+  //         }
+  //         if (error) {
+  //           alert(error.message);
+  //         }
+  //       },
+  //     },
+  //   );
+  // };
+
+  // useEffect(() => {
+  //   if (session?.user) {
+  //     if (session.user.theme !== theme) {
+  //       setTheme(session.user.theme);
+  //     }
+  //   }
+  // });
 
   const chats = [
     {
@@ -90,11 +119,11 @@ const Layout: FC<LayoutProps> = async ({ children }) => {
   return (
     <HydrateClient>
       <div className="flex h-screen w-full">
-        <div className="flex h-full w-full max-w-xs grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
+        <div className="flex h-full w-full max-w-xs grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-secondaryBackground px-6">
           <Link href={"/dashboard"} className="flex h-16 shrink-0 items-center">
             <MdOutlineConnectedTv className="mr-2 h-10 w-10" /> Domagoj Chat App
           </Link>
-          <div className="text-xs font-semibold leading-6 text-gray-400">
+          <div className="text-xs font-semibold leading-6 text-secondaryText">
             Your chats
           </div>
 
@@ -105,7 +134,7 @@ const Layout: FC<LayoutProps> = async ({ children }) => {
                   <li key={index}>
                     <Link
                       href={`/dashboard/chat/${chat.conversationId}`}
-                      className="font-semibold text-gray-600 hover:cursor-pointer hover:border-indigo-600 hover:text-indigo-600"
+                      className="font-semibold text-primaryText hover:cursor-pointer hover:border-indigo-600 hover:text-indigo-600"
                     >
                       {chat.name}
                     </Link>
@@ -113,7 +142,7 @@ const Layout: FC<LayoutProps> = async ({ children }) => {
                 );
               })}
               <li>
-                <div className="mt-4 text-xs font-semibold leading-6 text-gray-400">
+                <div className="mt-4 text-xs font-semibold leading-6 text-secondaryText">
                   Overview
                 </div>
 
@@ -121,10 +150,10 @@ const Layout: FC<LayoutProps> = async ({ children }) => {
                   <li>
                     <Link
                       href={"/dashboard/add"}
-                      className="text-fray-700 group flex gap-3 rounded-md p-2 text-sm font-semibold leading-6 hover:bg-gray-50 hover:text-indigo-700"
+                      className="group flex gap-3 rounded-md p-2 text-sm font-semibold leading-6 hover:bg-primaryHover hover:text-secondaryText"
                     >
-                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white text-[0.625rem] font-medium text-gray-400 group-hover:border-indigo-600 group-hover:text-indigo-600">
-                        <MdOutlineAddBox />
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-secondaryText bg-background text-[0.625rem] font-medium text-primaryText group-hover:bg-primaryHover group-hover:text-secondaryText">
+                        <MdOutlineAddBox className="h-4 w-4 text-primaryText" />
                       </span>
                       Add friend
                     </Link>
@@ -132,10 +161,10 @@ const Layout: FC<LayoutProps> = async ({ children }) => {
                   <li>
                     <Link
                       href={"/dashboard"}
-                      className="text-fray-700 group flex gap-3 rounded-md p-2 text-sm font-semibold leading-6 hover:bg-gray-50 hover:text-indigo-700"
+                      className="group flex gap-3 rounded-md p-2 text-sm font-semibold leading-6 hover:bg-primaryHover hover:text-secondaryText"
                     >
-                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white text-[0.625rem] font-medium text-gray-400 group-hover:border-indigo-600 group-hover:text-indigo-600">
-                        <RiUserAddLine />
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-secondaryText bg-background text-[0.625rem] font-medium text-gray-400 text-primaryText group-hover:bg-primaryHover group-hover:text-secondaryText">
+                        <RiUserAddLine className="h-4 w-4 text-primaryText" />
                       </span>
                       Friend requests
                     </Link>

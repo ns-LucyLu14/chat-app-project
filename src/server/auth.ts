@@ -23,6 +23,7 @@ declare module "next-auth" {
       id: string;
       name: string;
       username: string;
+      theme: string;
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
@@ -91,6 +92,7 @@ export const authOptions: NextAuthOptions = {
         session.user.id = token.sub; // User ID is in the token's subject
         session.user.username = token.username as string; // Pass username from token
         session.user.name = token.name as string; // Pass name from token
+        session.user.theme = token.theme as string; // Pass name from token
       }
       return session;
     },
@@ -99,6 +101,7 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.username = user.username;
         token.name = user.name;
+        token.theme = user.theme;
       }
       return token;
     },
