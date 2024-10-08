@@ -134,7 +134,7 @@ const Layout: FC<LayoutProps> = async ({ children }) => {
                   <FiMoon className="h-5 w-5" />
                 </div>
                 <div className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-700">
-                  Username: {session.user.name}
+                  Username: {session.user.username}
                 </div>
 
                 <Link
