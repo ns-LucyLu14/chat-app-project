@@ -15,7 +15,7 @@ git clone https://github.com/ns-LucyLu14/chat-app-project.git
 cd chat-app-project
 ```
 
-We will be using Node Version Manager version 18 for this project. Please make sure you have `nvm` installed on your machine before you run the following command
+We will be using Node Version Manager version 18 and yarn for this project. Please make sure you have `nvm` and `yarn` installed on your machine before you run the following command
 
 ```
 nvm use 18
