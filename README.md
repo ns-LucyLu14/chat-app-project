@@ -9,9 +9,10 @@ This is a [T3 Stack](https://create.t3.gg/) powered app bootstrapped with `creat
 To run this app on your local machine, first you need to clone this repository to your machine.
 
 ```
-mkdir domagoj-chat-app
-cd domagoj-chat-app
+mkdir your-folder-name
+cd your-folder-name
 git clone https://github.com/ns-LucyLu14/chat-app-project.git
+cd chat-app-project
 ```
 
 We will be using Node Version Manager version 18 for this project. Please make sure you have `nvm` installed on your machine before you run the following command
@@ -24,6 +25,12 @@ Run install command to install dependencies
 
 ```
 yarn
+```
+
+Setup environment variables
+
+```
+cp .env.example .env
 ```
 
 Setup Prisma database for local development
