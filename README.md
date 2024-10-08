@@ -39,11 +39,13 @@ Setup Prisma database for local development
 yarn db:push
 ```
 
-Run the app and enjoy! 🔥
+Run the app
 
 ```
 yarn dev
 ```
+
+Visit `http://localhost:3000` on your browser and enjoy! 🔥
 
 ## Chat App Stack
 

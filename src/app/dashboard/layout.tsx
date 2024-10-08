@@ -47,40 +47,6 @@ const Layout: FC<LayoutProps> = async ({ children }) => {
   const chats = [
     {
       userId: "user_1",
-      conversationId: "conv_1",
-      name: "Alice Johnson",
-      username: "alicej",
-      conversation: {
-        id: "conv_1",
-        lastMessageId: "msg_2",
-        createdAt: "2024-10-07T10:00:00Z",
-        messages: [
-          {
-            id: "msg_1",
-            messageText: "Hey Bob, how’s it going?",
-            userId: "user_1",
-            conversationId: "conv_1",
-            createdAt: "2024-10-07T10:01:00Z",
-          },
-          {
-            id: "msg_2",
-            messageText: "Doing well, Alice! How about you?",
-            userId: "user_2",
-            conversationId: "conv_1",
-            createdAt: "2024-10-07T10:02:00Z",
-          },
-        ],
-        lastMessage: {
-          id: "msg_2",
-          messageText: "Doing well, Alice! How about you?",
-          userId: "user_2",
-          conversationId: "conv_1",
-          createdAt: "2024-10-07T10:02:00Z",
-        },
-      },
-    },
-    {
-      userId: "user_1",
       conversationId: "conv_2",
       name: "Charlie Brown",
       username: "charlieb",
@@ -119,8 +85,11 @@ const Layout: FC<LayoutProps> = async ({ children }) => {
   return (
     <HydrateClient>
       <div className="flex h-screen w-full">
-        <div className="flex h-full w-full max-w-xs grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-secondaryBackground px-6">
-          <Link href={"/dashboard"} className="flex h-16 shrink-0 items-center">
+        <div className="flex h-full w-full max-w-xs grow flex-col gap-y-5 overflow-y-auto border-r border-secondaryBackground bg-secondaryBackground px-6">
+          <Link
+            href={"/dashboard"}
+            className="flex h-16 shrink-0 items-center font-semibold"
+          >
             <MdOutlineConnectedTv className="mr-2 h-10 w-10" /> Domagoj Chat App
           </Link>
           <div className="text-xs font-semibold leading-6 text-secondaryText">
@@ -134,7 +103,7 @@ const Layout: FC<LayoutProps> = async ({ children }) => {
                   <li key={index}>
                     <Link
                       href={`/dashboard/chat/${chat.conversationId}`}
-                      className="font-semibold text-primaryText hover:cursor-pointer hover:border-indigo-600 hover:text-indigo-600"
+                      className="flex rounded-md p-1 font-semibold text-primaryText transition hover:cursor-pointer hover:border-primaryHover hover:bg-primaryHover hover:text-secondaryText"
                     >
                       {chat.name}
                     </Link>
@@ -150,29 +119,18 @@ const Layout: FC<LayoutProps> = async ({ children }) => {
                   <li>
                     <Link
                       href={"/dashboard/add"}
-                      className="group flex gap-3 rounded-md p-2 text-sm font-semibold leading-6 hover:bg-primaryHover hover:text-secondaryText"
+                      className="group flex gap-3 rounded-md p-2 text-sm font-semibold leading-6 transition hover:bg-primaryHover hover:text-secondaryText"
                     >
-                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-secondaryText bg-background text-[0.625rem] font-medium text-primaryText group-hover:bg-primaryHover group-hover:text-secondaryText">
-                        <MdOutlineAddBox className="h-4 w-4 text-primaryText" />
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-primaryText bg-background text-[0.625rem] font-medium text-primaryText group-hover:border-secondaryText group-hover:bg-primaryHover group-hover:text-secondaryText">
+                        <MdOutlineAddBox className="h-4 w-4" />
                       </span>
                       Add friend
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href={"/dashboard"}
-                      className="group flex gap-3 rounded-md p-2 text-sm font-semibold leading-6 hover:bg-primaryHover hover:text-secondaryText"
-                    >
-                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-secondaryText bg-background text-[0.625rem] font-medium text-gray-400 text-primaryText group-hover:bg-primaryHover group-hover:text-secondaryText">
-                        <RiUserAddLine className="h-4 w-4 text-primaryText" />
-                      </span>
-                      Friend requests
                     </Link>
                   </li>
                 </ul>
               </li>
               <li className="-mx-6 mt-auto flex items-center justify-between px-2">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white text-[0.625rem] font-medium text-gray-400 hover:border-indigo-600 hover:text-indigo-600">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-primaryText bg-background text-[0.625rem] font-medium text-primaryText transition hover:cursor-pointer hover:border-secondaryText hover:bg-primaryHover hover:text-secondaryText">
                   <FiMoon className="h-5 w-5" />
                 </div>
                 <div className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-700">
@@ -181,7 +139,7 @@ const Layout: FC<LayoutProps> = async ({ children }) => {
 
                 <Link
                   href={"/api/auth/signout"}
-                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white text-[0.625rem] font-medium text-gray-400 hover:border-indigo-600 hover:text-indigo-600"
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-primaryText bg-background text-[0.625rem] font-medium transition hover:border-secondaryText hover:bg-primaryHover hover:text-indigo-600 hover:text-secondaryText"
                 >
                   <TbLogout className="h-5 w-5" />
                 </Link>
